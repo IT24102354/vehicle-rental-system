@@ -182,4 +182,24 @@ public class VehicleService {
         Vehicle vehicle = vehicleOpt.get();
         return vehicle.calculateRentalPrice(days);
     }
+    
+    /**
+     * Get featured vehicles for the dashboard
+     * Shows the latest uploaded vehicles that are available
+     * @param limit Maximum number of vehicles to return
+     * @return List of latest uploaded vehicles
+     */
+    public List<Vehicle> getFeaturedVehicles(int limit) {
+        // Get available vehicles sorted by ID in descending order (assuming higher ID = newer vehicle)
+        // This will give us the most recently added vehicles first
+        List<Vehicle> latestVehicles = vehicleRepository.findByAvailableTrueOrderByIdDesc();
+        
+        // If we have fewer vehicles than the limit, return all available vehicles
+        if (latestVehicles.size() <= limit) {
+            return latestVehicles;
+        }
+        
+        // Otherwise, return only the requested number of latest vehicles
+        return latestVehicles.subList(0, limit);
+    }
 }

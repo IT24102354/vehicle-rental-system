@@ -49,6 +49,28 @@
                             <li th:if="${session.user != null && session.user.role == 'ADMIN'}"><a class="dropdown-item" th:href="@{/vehicles/add/truck}"><i class="fas fa-truck"></i> Add Truck</a></li>
                         </ul>
                     </li>
+                    <li class="nav-item dropdown" th:if="${session.user != null}">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-clipboard-list"></i> Rentals
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/rentals/my}"><i class="fas fa-history"></i> My Rentals</a></li>
+                            <li th:if="${session.user.role == 'ADMIN'}"><hr class="dropdown-divider"></li>
+                            <li th:if="${session.user.role == 'ADMIN'}"><a class="dropdown-item" th:href="@{/rentals/all}"><i class="fas fa-list-alt"></i> All Rentals</a></li>
+                        </ul>
+                    </li>
+                    
+                    <!-- Payment Management Menu -->
+                    <li class="nav-item dropdown" th:if="${session.user != null}">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-credit-card"></i> Payments
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" th:href="@{/payments/history}"><i class="fas fa-history"></i> My Payments</a></li>
+                            <li th:if="${session.user.role == 'ADMIN'}"><hr class="dropdown-divider"></li>
+                            <li th:if="${session.user.role == 'ADMIN'}"><a class="dropdown-item" th:href="@{/payments/invoices}"><i class="fas fa-file-invoice-dollar"></i> All Invoices</a></li>
+                        </ul>
+                    </li>
                     <li class="nav-item d-none d-md-block">
                         <a class="nav-link" href="#"><i class="fas fa-info-circle"></i> About</a>
                     </li>

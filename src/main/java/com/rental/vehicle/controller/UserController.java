@@ -1,7 +1,11 @@
 package com.rental.vehicle.controller;
 
 import com.rental.vehicle.model.User;
+import com.rental.vehicle.model.Vehicle;
+import com.rental.vehicle.model.Rental;
 import com.rental.vehicle.service.UserService;
+import com.rental.vehicle.service.VehicleService;
+import com.rental.vehicle.service.RentalService;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +26,12 @@ public class UserController {
     
     @Autowired
     private UserService userService;
+    
+    @Autowired
+    private VehicleService vehicleService;
+    
+    @Autowired
+    private RentalService rentalService;
     
     /**
      * Display home page
@@ -130,7 +140,15 @@ public class UserController {
             return "redirect:/admin/dashboard";
         }
         
+        // Get the latest 2 vehicles for the dashboard as featured vehicles
+        List<Vehicle> featuredVehicles = vehicleService.getFeaturedVehicles(2);
+        
+        // Get user's active rentals count
+        List<Rental> activeRentals = rentalService.getActiveRentalsByUser(user);
+        
         model.addAttribute("user", user);
+        model.addAttribute("featuredVehicles", featuredVehicles);
+        model.addAttribute("activeRentalsCount", activeRentals.size());
         return "dashboard";
     }
     

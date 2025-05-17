@@ -115,6 +115,15 @@
                                     <a th:if="${vehicleType == 'truck'}" th:href="@{/vehicles/edit/truck/{id}(id=${vehicle.id})}" class="btn btn-primary me-2">Edit</a>
                                     <a th:href="@{/vehicles/delete/{id}(id=${vehicle.id})}" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this vehicle?')">Delete</a>
                                 </div>
+                                <div th:if="${session.user != null && vehicle.available && session.user.role != 'ADMIN'}">
+                                    <a th:href="@{/rentals/book/{id}(id=${vehicle.id})}" class="btn btn-success btn-lg">
+                                        <i class="fas fa-calendar-check me-2"></i> Book Now
+                                    </a>
+                                </div>
+                                <div th:if="${session.user == null && vehicle.available}" class="text-end">
+                                    <a th:href="@{/login}" class="btn btn-outline-primary mb-2 d-block">Login to Book</a>
+                                    <small class="text-muted">Don't have an account? <a th:href="@{/register}">Register</a></small>
+                                </div>
                             </div>
                         </div>
                     </div>

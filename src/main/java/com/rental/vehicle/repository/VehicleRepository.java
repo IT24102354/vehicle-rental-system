@@ -84,4 +84,16 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
            "LOWER(v.model) LIKE LOWER(CONCAT('%', :keyword, '%')) OR " +
            "LOWER(v.color) LIKE LOWER(CONCAT('%', :keyword, '%'))")
     List<Vehicle> searchVehicles(@Param("keyword") String keyword);
+    
+    /**
+     * Find available vehicles ordered by ID in descending order (newest first)
+     * @return List of available vehicles ordered by ID in descending order
+     */
+    List<Vehicle> findByAvailableTrueOrderByIdDesc();
+    
+    /**
+     * Find all vehicles ordered by ID in descending order (newest first)
+     * @return List of all vehicles ordered by ID in descending order
+     */
+    List<Vehicle> findAllByOrderByIdDesc();
 }
